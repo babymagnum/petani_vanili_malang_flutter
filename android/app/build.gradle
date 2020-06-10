@@ -40,7 +40,7 @@ android {
         release {
             keyAlias 'petani_vanili_malang'
             keyPassword 'password'
-            storeFile file('/Users/ariefzainuri/Documents/FlutterProject/catalog_mobil_flutter/android/petani_vanili_malang.jks')
+            storeFile file('/Users/ariefzainuri/Documents/FlutterProject/petani_vanili_flutter/android/petani_vanili_malang.jks')
             storePassword 'password'
         }
     }
