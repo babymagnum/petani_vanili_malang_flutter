@@ -3,6 +3,7 @@ import 'package:dribbble_clone/core/helper/locator.dart';
 import 'package:dribbble_clone/core/theme/theme_color.dart';
 import 'package:dribbble_clone/core/widgets/placeholder_container_shimmer.dart';
 import 'package:dribbble_clone/model/video_produk_model.dart';
+import 'package:dribbble_clone/view/detail_produk/widgets/bottom_sheet_video.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:video_player/video_player.dart';
@@ -22,28 +23,47 @@ class ListVideoItem extends StatefulWidget {
 
 class _ListVideoItemState extends State<ListVideoItem> with SingleTickerProviderStateMixin {
 
-  VideoPlayerController _controller;
+  VideoPlayerController _videoPlayerController;
   AnimationController _playPauseController;
   var _detailProdukStores = locator<DetailProdukStores>();
+
+  _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => BottomSheetVideo(
+        videoPlayerController: _videoPlayerController,
+        videoUrl: widget.item.url,
+        playPauseController: _playPauseController,
+        onPlayPauseClick: () => _playPause(),
+      ),
+    );
+  }
 
   @override
   void initState() {
     super.initState();
 
-    _controller = VideoPlayerController.network(widget.item.url)..initialize().then((_) {
-      setState(() {});
-    });
-
+    _videoPlayerController = VideoPlayerController.network(widget.item.url)..initialize().then((_) => setState(() {}));
     _playPauseController = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController.pause();
+    _videoPlayerController.dispose();
+    _playPauseController.dispose();
+
+    super.dispose();
   }
 
   _playPause() {
     if (widget.item.isPlaying) {
       _playPauseController.reverse();
-      _controller.pause();
+      _videoPlayerController.pause();
     } else {
       _playPauseController.forward();
-      _controller.play();
+      _videoPlayerController.play();
     }
 
     _detailProdukStores.updateListVideo(widget.index);
@@ -60,10 +80,10 @@ class _ListVideoItemState extends State<ListVideoItem> with SingleTickerProvider
         borderRadius: BorderRadius.all(Radius.circular(10)),
         child: Stack(
           children: <Widget>[
-            _controller.value.initialized ?
+            _videoPlayerController.value.initialized ?
             Container(
               width: size.width * 0.5, height: 120.h,
-              child: VideoPlayer(_controller),
+              child: VideoPlayer(_videoPlayerController),
             ) :
             PlaceholderContainerShimmer(
               size: Size(size.width * 0.5, 120.h),
@@ -81,6 +101,18 @@ class _ListVideoItemState extends State<ListVideoItem> with SingleTickerProvider
                         child: AnimatedIcon(icon: AnimatedIcons.play_pause, size: 24.h, progress: _playPauseController, color: ThemeColor.primary.withOpacity(0.5),),
                       ),
                     ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              right: 5, top: 5,
+              child: Builder(
+                builder: (context) => Parent(
+                  gesture: Gestures()..onTap(() => _showBottomSheet(context)),
+                  style: ParentStyle()..background.color(Colors.black.withOpacity(0.3))..width(17.w)..height(17.w)..borderRadius(all: 3),
+                  child: Center(
+                    child: Icon(Icons.fullscreen, size: 13.w, color: Colors.white,),
                   ),
                 ),
               ),

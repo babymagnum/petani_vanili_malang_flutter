@@ -24,6 +24,21 @@ mixin _$DetailProdukStores on _DetailProdukStores, Store {
     });
   }
 
+  final _$showMenuAtom = Atom(name: '_DetailProdukStores.showMenu');
+
+  @override
+  bool get showMenu {
+    _$showMenuAtom.reportRead();
+    return super.showMenu;
+  }
+
+  @override
+  set showMenu(bool value) {
+    _$showMenuAtom.reportWrite(value, super.showMenu, () {
+      super.showMenu = value;
+    });
+  }
+
   final _$listVideoAtom = Atom(name: '_DetailProdukStores.listVideo');
 
   @override
@@ -43,11 +58,22 @@ mixin _$DetailProdukStores on _DetailProdukStores, Store {
       ActionController(name: '_DetailProdukStores');
 
   @override
-  dynamic setImageIndex(int value) {
+  dynamic setImageIndex(dynamic value) {
     final _$actionInfo = _$_DetailProdukStoresActionController.startAction(
         name: '_DetailProdukStores.setImageIndex');
     try {
       return super.setImageIndex(value);
+    } finally {
+      _$_DetailProdukStoresActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setShowMenu(dynamic value) {
+    final _$actionInfo = _$_DetailProdukStoresActionController.startAction(
+        name: '_DetailProdukStores.setShowMenu');
+    try {
+      return super.setShowMenu(value);
     } finally {
       _$_DetailProdukStoresActionController.endAction(_$actionInfo);
     }
@@ -68,6 +94,7 @@ mixin _$DetailProdukStores on _DetailProdukStores, Store {
   String toString() {
     return '''
 imageIndex: ${imageIndex},
+showMenu: ${showMenu},
 listVideo: ${listVideo}
     ''';
   }

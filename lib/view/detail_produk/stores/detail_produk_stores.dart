@@ -7,8 +7,8 @@ class DetailProdukStores = _DetailProdukStores with _$DetailProdukStores;
 
 abstract class _DetailProdukStores with Store {
 
-  @observable
-  int imageIndex = 0;
+  @observable int imageIndex = 0;
+  @observable bool showMenu = false;
 
   @observable
   ObservableList<VideoProdukModel> listVideo = ObservableList.of([
@@ -17,8 +17,8 @@ abstract class _DetailProdukStores with Store {
     VideoProdukModel('https://xf-xfsdk-doc.oss-cn-shenzhen.aliyuncs.com/iOS/temp/test.mp4', false)
   ]);
 
-  @action
-  setImageIndex(int value) => imageIndex = value;
+  @action setImageIndex(value) => imageIndex = value;
+  @action setShowMenu(value) => showMenu = value;
 
   @action
   updateListVideo(int index) {
