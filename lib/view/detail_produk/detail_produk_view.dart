@@ -6,6 +6,7 @@ import 'package:dribbble_clone/core/theme/theme_text_style.dart';
 import 'package:dribbble_clone/core/widgets/page_indicator.dart';
 import 'package:dribbble_clone/core/widgets/placeholder_network_image.dart';
 import 'package:dribbble_clone/model/product/item_product.dart';
+import 'package:dribbble_clone/networking/request/submit_lead_request.dart';
 import 'package:dribbble_clone/view/detail_produk/widgets/list_video_item.dart';
 import 'package:dribbble_clone/view/high_resolution/high_resolution_view.dart';
 import 'package:dribbble_clone/view/home/widgets/list_produk_item.dart';
@@ -36,6 +37,15 @@ class _DetailProdukViewState extends State<DetailProdukView> {
   var _berandaStores = locator<BerandaStores>();
   var _detailProdukStores = locator<DetailProdukStores>();
 
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration.zero, () {
+      _detailProdukStores.submitLeads(SubmitLeadsRequest('${widget.itemProduct.id}', 'page', '${_berandaStores.merchantDetailData.merchant.id}'));
+    });
+  }
+
   List<Widget> pageIndicators() {
     List<Widget> listWidget = List();
 
@@ -52,15 +62,20 @@ class _DetailProdukViewState extends State<DetailProdukView> {
     return listWidget;
   }
 
+  String _shareLink() {
+    return 'https://plis.id/product/${widget.itemProduct.name.toLowerCase().replaceAll(' ', '-')}/${widget.itemProduct.id}';
+  }
+
   _share() {
-    Share.share('https://plis.id/product/${widget.itemProduct.name.toLowerCase().replaceAll(' ', '-')}/${widget.itemProduct.id}');
+    Share.share(_shareLink());
   }
 
   _toHighResImage(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (_) => HighResolutionView(
       produkImage: widget.itemProduct.images[_detailProdukStores.imageIndex],
       produkDescription: widget.itemProduct.description,
-      produkName: widget.itemProduct.name,))
+      produkName: widget.itemProduct.name,
+      produkShareLink: _shareLink(),))
     );
   }
 

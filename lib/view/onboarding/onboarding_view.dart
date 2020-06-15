@@ -1,5 +1,8 @@
+import 'package:division/division.dart';
 import 'package:dribbble_clone/core/helper/constant.dart';
 import 'package:dribbble_clone/core/helper/locator.dart';
+import 'package:dribbble_clone/core/theme/fonts.dart';
+import 'package:dribbble_clone/core/theme/theme_color.dart';
 import 'package:dribbble_clone/core/theme/theme_text_style.dart';
 import 'package:dribbble_clone/core/widgets/placeholder_container_shimmer.dart';
 import 'package:dribbble_clone/core/widgets/placeholder_network_image.dart';
@@ -48,55 +51,48 @@ class _OnboardingViewState extends State<OnboardingView> {
         PlaceholderContainerShimmer(size: Size(size.width, size.height), borderRadius: 0) :
         Stack(
           children: <Widget>[
-            PlaceholderNetworkImage(
-                imageFit: BoxFit.cover,
-                url: _berandaStores?.merchantDetailData?.merchant?.logo ?? '',
-                size: Size(size.width, size.height),
-                borderRadius: 0
-            ),
-            Container(
-              width: size.width, height: size.height,
-              color: Colors.black.withOpacity(0.3),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 35.h, horizontal: 16.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () => _nextScreen(context),
-                      child: Icon(Icons.clear, color: Colors.white, size: 20,),
-                    ),
+            Container(height: size.height, width: size.width,),
+            Stack(
+              children: <Widget>[
+                PlaceholderNetworkImage(
+                  url: _berandaStores.merchantDetailData.merchant.logo,
+                  size: Size(size.width, size.height / 2.25),
+                  borderRadius: 0,
+                  imageFit: BoxFit.cover,
+                ),
+                Container(
+                  height: size.height / 2.25, width: size.width,
+                  color: Colors.black.withOpacity(0.37),
+                ),
+                Positioned(
+                  top: 20.h + MediaQuery.of(context).padding.top, left: 16.w,
+                  child: GestureDetector(
+                    onTap: () => _nextScreen(context),
+                    child: Image.asset('assets/images/ic_clear.png', width: 24.w, height: 24.h,),
                   ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(height: 38.h,),
-                          Text('Selamat Datang\ndi ${_berandaStores?.merchantDetailData?.merchant?.name ?? '-'}!', style: ThemeTextStyle.ralewayBold.apply(fontSizeDelta: 24.ssp, color: Colors.white),),
-                          SizedBox(height: 10.h,),
-                          Text(_berandaStores?.merchantDetailData?.merchant?.description ?? '', style: ThemeTextStyle.ralewayRegular.apply(fontSizeDelta: 12.ssp, color: Colors.white),),
-                          SizedBox(height: 20.h,),
-                        ],
-                      ),
-                    ),
+                )
+              ],
+            ),
+            Positioned(
+              left: 0, right: 0, top: (size.height / 2.25) - 32, bottom: 0,
+              child: Parent(
+                style: ParentStyle()..borderRadius(topLeft: 32, topRight: 32)..background.color(Colors.white)..padding(horizontal: 16.w, top: 3),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 40.h,),
+                      Text('Selamat datang di ${_berandaStores.merchantDetailData.merchant.name}', style: ThemeTextStyle.ralewayBold.apply(color: ThemeColor.primary, fontSizeDelta: 24.ssp),),
+                      SizedBox(height: 30.h,),
+                      Text(_berandaStores.merchantDetailData.merchant.description ?? '', style: TextStyle(height: 1.3, fontFamily: Fonts.raleway, fontWeight: Fonts.ralewayRegular, fontSize: 12.ssp,),),
+                      SizedBox(height: 20.h,)
+                    ],
                   ),
-                  SizedBox(height: 5.h,),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () => _nextScreen(context),
-                      child: Text('NEXT', style: ThemeTextStyle.ralewayBold.apply(color: Colors.white, fontSizeDelta: 18.ssp),),
-                    ),
-                  )
-                ],
+                ),
               ),
             )
           ],
-        ),
+        )
       ),
     );
   }

@@ -1,4 +1,6 @@
 import 'package:dribbble_clone/model/video_produk_model.dart';
+import 'package:dribbble_clone/networking/request/submit_lead_request.dart';
+import 'package:dribbble_clone/networking/service/networking.dart';
 import 'package:mobx/mobx.dart';
 
 part 'detail_produk_stores.g.dart';
@@ -26,5 +28,9 @@ abstract class _DetailProdukStores with Store {
     video.isPlaying = !video.isPlaying;
 
     listVideo[index] = video;
+  }
+
+  submitLeads(SubmitLeadsRequest body) {
+    Networking().submiteLeads(body);
   }
 }

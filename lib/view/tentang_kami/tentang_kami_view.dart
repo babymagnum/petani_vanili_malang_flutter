@@ -60,7 +60,7 @@ class _TentangKamiViewState extends State<TentangKamiView> {
                       SizedBox(height: 40.h,),
                       Text('Tentang Kami', style: ThemeTextStyle.ralewayBold.apply(color: ThemeColor.primary, fontSizeDelta: 24.ssp),),
                       SizedBox(height: 30.h,),
-                      Text(_berandaStores.merchantDetailData.merchant.description ?? '', style: TextStyle(height: 1.25, fontFamily: Fonts.raleway, fontWeight: Fonts.ralewayRegular, fontSize: 12.ssp,),),
+                      Text(_berandaStores.merchantDetailData.merchant.description ?? '', style: TextStyle(height: 1.3, fontFamily: Fonts.raleway, fontWeight: Fonts.ralewayRegular, fontSize: 12.ssp,),),
                       SizedBox(height: 20.h,)
                     ],
                   ),
