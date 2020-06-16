@@ -80,6 +80,13 @@ class _DetailProdukViewState extends State<DetailProdukView> {
   }
 
   @override
+  void dispose() {
+    _detailProdukStores.resetData();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
@@ -214,54 +221,66 @@ class _DetailProdukViewState extends State<DetailProdukView> {
             AnimatedPositioned(
               bottom: 36.w + (_detailProdukStores.showMenu ? (36 * 3) + (16 * 3) : 0).toDouble().w, right: 26.w,
               duration: Duration(milliseconds: 200),
-              child: Parent(
-                gesture: Gestures()..onTap(() {
-                  final phone = widget.itemProduct?.merchant?.phone ?? 0;
-                  if (phone == 0) {
-                    Fluttertoast.showToast(msg: 'Merchant ini belum mendaftarkan nomer telepon.');
-                  } else {
-                    UrlLauncher.launch('tel:${widget?.itemProduct?.merchant?.phone ?? 0}');
-                  }
-                }),
-                style: ParentStyle()..width(36.w)..height(36.w)..borderRadius(all: 1000)..background.color(Color(0xFF4B6CAC))..ripple(true),
-                child: Center(
-                  child: Image.asset('assets/images/ic_phone.png', width: 16.w, height: 16.w,),
+              child: Builder(
+                builder: (context) => Parent(
+                  gesture: Gestures()..onTap(() async {
+                    final phone = widget.itemProduct?.merchant?.phone ?? 0;
+                    if (phone == 0) {
+                      Fluttertoast.showToast(msg: 'Merchant ini belum mendaftarkan nomer telepon.');
+                    } else {
+                      if (_detailProdukStores.productDetailData == null) await _detailProdukStores.getProductDetailData(context, '${widget.itemProduct.id}');
+                      _detailProdukStores.submitLeads(SubmitLeadsRequest('${widget.itemProduct.id}', 'phone', '${_detailProdukStores.productDetailData.merchant.user_id}'));
+                      UrlLauncher.launch('tel:${widget?.itemProduct?.merchant?.phone ?? 0}');
+                    }
+                  }),
+                  style: ParentStyle()..width(36.w)..height(36.w)..borderRadius(all: 1000)..background.color(Color(0xFF4B6CAC))..ripple(true),
+                  child: Center(
+                    child: Image.asset('assets/images/ic_phone.png', width: 16.w, height: 16.w,),
+                  ),
                 ),
               ),
             ),
             AnimatedPositioned(
               bottom: 36.w + (_detailProdukStores.showMenu ? (36 * 2) + (16 * 2) : 0).toDouble().w, right: 26.w,
               duration: Duration(milliseconds: 200),
-              child: Parent(
-                gesture: Gestures()..onTap(() {
-                  final email = widget.itemProduct?.merchant?.email ?? '';
-                  if (email == '') {
-                    Fluttertoast.showToast(msg: 'Merchant ini belum mendaftarkan alamat email.');
-                  } else {
-                    UrlLauncher.launch('mailto:${widget.itemProduct?.merchant?.email ?? ''}');
-                  }
-                }),
-                style: ParentStyle()..width(36.w)..height(36.w)..borderRadius(all: 1000)..background.color(Color(0xFFF12E2E))..ripple(true),
-                child: Center(
-                  child: Image.asset('assets/images/ic_mail_detail.png', width: 16.w, height: 16.w,),
+              child: Builder(
+                builder: (context) => Parent(
+                  gesture: Gestures()..onTap(() async {
+                    final email = widget.itemProduct?.merchant?.email ?? '';
+                    if (email == '') {
+                      Fluttertoast.showToast(msg: 'Merchant ini belum mendaftarkan alamat email.');
+                    } else {
+                      if (_detailProdukStores.productDetailData == null) await _detailProdukStores.getProductDetailData(context, '${widget.itemProduct.id}');
+                      _detailProdukStores.submitLeads(SubmitLeadsRequest('${widget.itemProduct.id}', 'email', '${_detailProdukStores.productDetailData.merchant.user_id}'));
+                      UrlLauncher.launch('mailto:${widget.itemProduct?.merchant?.email ?? ''}');
+                    }
+                  }),
+                  style: ParentStyle()..width(36.w)..height(36.w)..borderRadius(all: 1000)..background.color(Color(0xFFF12E2E))..ripple(true),
+                  child: Center(
+                    child: Image.asset('assets/images/ic_mail_detail.png', width: 16.w, height: 16.w,),
+                  ),
                 ),
               ),
             ),
             AnimatedPositioned(
               bottom: 36.w + (_detailProdukStores.showMenu ? 36 + 16 : 0).toDouble().w, right: 26.w,
               duration: Duration(milliseconds: 200),
-              child: Parent(
-                gesture: Gestures()..onTap(() {
-                  final whatsapp = widget.itemProduct?.merchant?.whatsapp ?? '';
-                  if (whatsapp == '') {
-                    Fluttertoast.showToast(msg: 'Merchant ini belum mendaftarkan nomer WhatsApp.');
-                  } else {
-                    FlutterOpenWhatsapp.sendSingleMessage(widget.itemProduct?.merchant?.whatsapp, "Hello...");
-                  }
-                }),
-                style: ParentStyle()..width(36.w)..height(36.w)..borderRadius(all: 1000)..background.color(Color(0xFF5AAC4B))..ripple(true),
-                child: Center(
-                  child: Image.asset('assets/images/ic_message_circle.png', width: 16.w, height: 16.w,),
+              child: Builder(
+                builder: (context) => Parent(
+                  gesture: Gestures()..onTap(() async {
+                    final whatsapp = widget.itemProduct?.merchant?.whatsapp ?? '';
+                    if (whatsapp == '') {
+                      Fluttertoast.showToast(msg: 'Merchant ini belum mendaftarkan nomer WhatsApp.');
+                    } else {
+                      if (_detailProdukStores.productDetailData == null) await _detailProdukStores.getProductDetailData(context, '${widget.itemProduct.id}');
+                      _detailProdukStores.submitLeads(SubmitLeadsRequest('${widget.itemProduct.id}', 'phone', '${_detailProdukStores.productDetailData.merchant.user_id}'));
+                      FlutterOpenWhatsapp.sendSingleMessage(widget.itemProduct?.merchant?.whatsapp, "Hello...");
+                    }
+                  }),
+                  style: ParentStyle()..width(36.w)..height(36.w)..borderRadius(all: 1000)..background.color(Color(0xFF5AAC4B))..ripple(true),
+                  child: Center(
+                    child: Image.asset('assets/images/ic_message_circle.png', width: 16.w, height: 16.w,),
+                  ),
                 ),
               ),
             ),

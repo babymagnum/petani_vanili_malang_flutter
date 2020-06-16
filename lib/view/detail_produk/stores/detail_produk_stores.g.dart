@@ -9,6 +9,22 @@ part of 'detail_produk_stores.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$DetailProdukStores on _DetailProdukStores, Store {
+  final _$productDetailDataAtom =
+      Atom(name: '_DetailProdukStores.productDetailData');
+
+  @override
+  ProductDetailData get productDetailData {
+    _$productDetailDataAtom.reportRead();
+    return super.productDetailData;
+  }
+
+  @override
+  set productDetailData(ProductDetailData value) {
+    _$productDetailDataAtom.reportWrite(value, super.productDetailData, () {
+      super.productDetailData = value;
+    });
+  }
+
   final _$imageIndexAtom = Atom(name: '_DetailProdukStores.imageIndex');
 
   @override
@@ -54,6 +70,15 @@ mixin _$DetailProdukStores on _DetailProdukStores, Store {
     });
   }
 
+  final _$getProductDetailDataAsyncAction =
+      AsyncAction('_DetailProdukStores.getProductDetailData');
+
+  @override
+  Future getProductDetailData(dynamic context, String productId) {
+    return _$getProductDetailDataAsyncAction
+        .run(() => super.getProductDetailData(context, productId));
+  }
+
   final _$_DetailProdukStoresActionController =
       ActionController(name: '_DetailProdukStores');
 
@@ -80,6 +105,17 @@ mixin _$DetailProdukStores on _DetailProdukStores, Store {
   }
 
   @override
+  dynamic resetData() {
+    final _$actionInfo = _$_DetailProdukStoresActionController.startAction(
+        name: '_DetailProdukStores.resetData');
+    try {
+      return super.resetData();
+    } finally {
+      _$_DetailProdukStoresActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic updateListVideo(int index) {
     final _$actionInfo = _$_DetailProdukStoresActionController.startAction(
         name: '_DetailProdukStores.updateListVideo');
@@ -93,6 +129,7 @@ mixin _$DetailProdukStores on _DetailProdukStores, Store {
   @override
   String toString() {
     return '''
+productDetailData: ${productDetailData},
 imageIndex: ${imageIndex},
 showMenu: ${showMenu},
 listVideo: ${listVideo}

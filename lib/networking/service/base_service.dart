@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:dribbble_clone/core/helper/constant.dart';
 import 'package:dribbble_clone/model/merchant_detail/merchant_detail.dart';
 import 'package:dribbble_clone/model/product/product.dart';
+import 'package:dribbble_clone/model/product_detail/product_detail.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../model/success/success.dart';
@@ -164,6 +165,8 @@ class BaseService {
       return MerchantDetail.fromJson(json) as T;
     } else if (T == Product) {
       return Product.fromJson(json) as T;
+    } else if (T == ProductDetail) {
+      return ProductDetail.fromJson(json) as T;
     } else {
       // if this print statement occured, this means that you're not register the model class in here
       print('Unknown class, dont forget to add your model in BaseService.dart to parse the json');
