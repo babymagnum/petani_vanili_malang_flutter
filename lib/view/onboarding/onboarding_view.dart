@@ -76,17 +76,20 @@ class _OnboardingViewState extends State<OnboardingView> {
             Positioned(
               left: 0, right: 0, top: (size.height / 2.25) - 32, bottom: 0,
               child: Parent(
-                style: ParentStyle()..borderRadius(topLeft: 32, topRight: 32)..background.color(Colors.white)..padding(horizontal: 16.w, top: 3),
+                style: ParentStyle()..borderRadius(topLeft: 32, topRight: 32)..background.color(Colors.white)..padding(top: 3),
                 child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(height: 40.h,),
-                      Text('Selamat datang di ${_berandaStores.merchantDetailData.merchant.name}', style: ThemeTextStyle.ralewayBold.apply(color: ThemeColor.primary, fontSizeDelta: 24.ssp),),
-                      SizedBox(height: 30.h,),
-                      Text(_berandaStores.merchantDetailData.merchant.description ?? '', style: TextStyle(height: 1.3, fontFamily: Fonts.raleway, fontWeight: Fonts.ralewayRegular, fontSize: 12.ssp,),),
-                      SizedBox(height: 20.h,)
-                    ],
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(height: 40.h,),
+                        Text('Selamat datang di ${_berandaStores.merchantDetailData.merchant.name}', style: ThemeTextStyle.ralewayBold.apply(color: ThemeColor.primary, fontSizeDelta: 24.ssp),),
+                        SizedBox(height: 30.h,),
+                        Text(_berandaStores.merchantDetailData.merchant.description ?? '', style: TextStyle(height: 1.3, fontFamily: Fonts.raleway, fontWeight: Fonts.ralewayRegular, fontSize: 12.ssp,),),
+                        SizedBox(height: 20.h,)
+                      ],
+                    ),
                   ),
                 ),
               ),

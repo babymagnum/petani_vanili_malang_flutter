@@ -47,7 +47,7 @@ android {
 
     buildTypes {
         release {
-            resValue "string", "app_name", "Petani Vanili Malang"
+            resValue "string", "app_name", "Folia Garden"
             release {
                 signingConfig signingConfigs.release
                 minifyEnabled true
@@ -57,7 +57,7 @@ android {
         }
         debug {
             applicationIdSuffix = '.debug'
-            resValue "string", "app_name", "Petani Vanili Malang Dev"
+            resValue "string", "app_name", "Folia Garden Dev"
         }
 
     }
