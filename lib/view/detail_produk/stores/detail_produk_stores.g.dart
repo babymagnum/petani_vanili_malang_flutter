@@ -9,6 +9,21 @@ part of 'detail_produk_stores.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$DetailProdukStores on _DetailProdukStores, Store {
+  final _$fullScreenAtom = Atom(name: '_DetailProdukStores.fullScreen');
+
+  @override
+  bool get fullScreen {
+    _$fullScreenAtom.reportRead();
+    return super.fullScreen;
+  }
+
+  @override
+  set fullScreen(bool value) {
+    _$fullScreenAtom.reportWrite(value, super.fullScreen, () {
+      super.fullScreen = value;
+    });
+  }
+
   final _$productDetailDataAtom =
       Atom(name: '_DetailProdukStores.productDetailData');
 
@@ -70,6 +85,22 @@ mixin _$DetailProdukStores on _DetailProdukStores, Store {
     });
   }
 
+  final _$listVideoYoutubeAtom =
+      Atom(name: '_DetailProdukStores.listVideoYoutube');
+
+  @override
+  ObservableList<VideoProdukModel> get listVideoYoutube {
+    _$listVideoYoutubeAtom.reportRead();
+    return super.listVideoYoutube;
+  }
+
+  @override
+  set listVideoYoutube(ObservableList<VideoProdukModel> value) {
+    _$listVideoYoutubeAtom.reportWrite(value, super.listVideoYoutube, () {
+      super.listVideoYoutube = value;
+    });
+  }
+
   final _$getProductDetailDataAsyncAction =
       AsyncAction('_DetailProdukStores.getProductDetailData');
 
@@ -81,6 +112,17 @@ mixin _$DetailProdukStores on _DetailProdukStores, Store {
 
   final _$_DetailProdukStoresActionController =
       ActionController(name: '_DetailProdukStores');
+
+  @override
+  dynamic setFullScreen(dynamic value) {
+    final _$actionInfo = _$_DetailProdukStoresActionController.startAction(
+        name: '_DetailProdukStores.setFullScreen');
+    try {
+      return super.setFullScreen(value);
+    } finally {
+      _$_DetailProdukStoresActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic setImageIndex(dynamic value) {
@@ -129,10 +171,12 @@ mixin _$DetailProdukStores on _DetailProdukStores, Store {
   @override
   String toString() {
     return '''
+fullScreen: ${fullScreen},
 productDetailData: ${productDetailData},
 imageIndex: ${imageIndex},
 showMenu: ${showMenu},
-listVideo: ${listVideo}
+listVideo: ${listVideo},
+listVideoYoutube: ${listVideoYoutube}
     ''';
   }
 }

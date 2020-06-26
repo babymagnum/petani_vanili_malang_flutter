@@ -31,9 +31,9 @@ class ListProdukBerandaShimmer extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  PlaceholderContainerShimmer(size: Size(next(50, 130).toDouble(), 16), borderRadius: 1000),
+                  PlaceholderContainerShimmer(size: Size(next(50, 130).toDouble(), 12), borderRadius: 1000),
                   SizedBox(height: 5.h,),
-                  PlaceholderContainerShimmer(size: Size(next(70, 85).toDouble(), 14), borderRadius: 1000),
+                  PlaceholderContainerShimmer(size: Size(next(70, 85).toDouble(), 10), borderRadius: 1000),
                   SizedBox(height: 9.h,)
                 ],
               ),

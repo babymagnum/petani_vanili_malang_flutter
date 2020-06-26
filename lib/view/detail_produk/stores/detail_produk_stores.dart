@@ -12,6 +12,7 @@ class DetailProdukStores = _DetailProdukStores with _$DetailProdukStores;
 
 abstract class _DetailProdukStores with Store {
 
+  @observable bool fullScreen = false;
   @observable ProductDetailData productDetailData;
   @observable int imageIndex = 0;
   @observable bool showMenu = false;
@@ -23,6 +24,14 @@ abstract class _DetailProdukStores with Store {
     VideoProdukModel('https://xf-xfsdk-doc.oss-cn-shenzhen.aliyuncs.com/iOS/temp/test.mp4', false)
   ]);
 
+  @observable
+  ObservableList<VideoProdukModel> listVideoYoutube = ObservableList.of([
+    VideoProdukModel('https://www.youtube.com/watch?v=4Xyu95TEJZ0', false),
+    VideoProdukModel('https://www.youtube.com/watch?v=TI4B1__snwU', false),
+    VideoProdukModel('https://www.youtube.com/watch?v=xyezyA48V04', false),
+  ]);
+
+  @action setFullScreen(value) => fullScreen = value;
   @action setImageIndex(value) => imageIndex = value;
   @action setShowMenu(value) => showMenu = value;
 
