@@ -3,7 +3,6 @@ import 'package:dribbble_clone/view/detail_produk/widgets/youtube_full_screen.da
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'package:division/division.dart';
 import 'package:dribbble_clone/core/theme/theme_text_style.dart';
-import 'package:dribbble_clone/model/video_produk_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +13,7 @@ class ListVideoYoutubeItem extends StatefulWidget {
   ListVideoYoutubeItem({Key key, @required this.isFirst, @required this.item, @required this.index}): super(key: key);
 
   final bool isFirst;
-  final VideoProdukModel item;
+  final String item;
   final int index;
 
   @override
@@ -29,7 +28,7 @@ class _ListVideoYoutubeItemState extends State<ListVideoYoutubeItem> with Single
     super.initState();
 
     _youtubePlayerController = YoutubePlayerController(
-      initialVideoId: YoutubePlayer.convertUrlToId(widget.item.url),
+      initialVideoId: YoutubePlayer.convertUrlToId(widget.item),
       flags: YoutubePlayerFlags(
           disableDragSeek: true,
           autoPlay: false,
@@ -54,17 +53,17 @@ class _ListVideoYoutubeItemState extends State<ListVideoYoutubeItem> with Single
 
   _launchURL() async {
     if (Platform.isIOS) {
-      if (await UrlLauncher.canLaunch(widget.item.url)) {
-        await UrlLauncher.launch(widget.item.url, forceSafariVC: false);
+      if (await UrlLauncher.canLaunch(widget.item)) {
+        await UrlLauncher.launch(widget.item, forceSafariVC: false);
       } else {
-        if (await UrlLauncher.canLaunch(widget.item.url)) {
-          await UrlLauncher.launch(widget.item.url);
+        if (await UrlLauncher.canLaunch(widget.item)) {
+          await UrlLauncher.launch(widget.item);
         } else {
           throw 'Could not launch https://www.youtube.com/channel/UCwXdFgeE9KYzlDdR7TG9cMw';
         }
       }
     } else {
-      var url = widget.item.url;
+      var url = widget.item;
       if (await UrlLauncher.canLaunch(url)) {
         await UrlLauncher.launch(url);
       } else {
@@ -90,7 +89,7 @@ class _ListVideoYoutubeItemState extends State<ListVideoYoutubeItem> with Single
                 GestureDetector(
                   onTap: () async {
                     _youtubePlayerController.pause();
-                    YoutubePlayerValue result = await Navigator.push(context, MaterialPageRoute(builder: (_) => YoutubeFullScreen(url: widget.item.url, time: _youtubePlayerController.value.position.inSeconds)));
+                    YoutubePlayerValue result = await Navigator.push(context, MaterialPageRoute(builder: (_) => YoutubeFullScreen(url: widget.item, time: _youtubePlayerController.value.position.inSeconds)));
                     print('result from detail $result');
                     _youtubePlayerController.seekTo(Duration(seconds: result.position.inSeconds));
                     if (result.isPlaying) {

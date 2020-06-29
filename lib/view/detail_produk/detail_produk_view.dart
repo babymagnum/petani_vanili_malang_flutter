@@ -7,7 +7,6 @@ import 'package:dribbble_clone/core/widgets/page_indicator.dart';
 import 'package:dribbble_clone/core/widgets/placeholder_network_image.dart';
 import 'package:dribbble_clone/model/product/item_product.dart';
 import 'package:dribbble_clone/networking/request/submit_lead_request.dart';
-import 'package:dribbble_clone/view/detail_produk/widgets/list_video_item.dart';
 import 'package:dribbble_clone/view/detail_produk/widgets/list_video_youtube_item.dart';
 import 'package:dribbble_clone/view/high_resolution/high_resolution_view.dart';
 import 'package:dribbble_clone/view/home/widgets/list_produk_item.dart';
@@ -194,11 +193,11 @@ class _DetailProdukViewState extends State<DetailProdukView> {
                           width: size.width, height: _detailProdukStores.fullScreen ? size.height : 120.h,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: _detailProdukStores.listVideoYoutube.length,
+                            itemCount: widget.itemProduct.videos.length,
                             itemBuilder: (_, index) => ListVideoYoutubeItem(
                                 key: Key(index.toString()),
                                 isFirst: index == 0,
-                                item: _detailProdukStores.listVideoYoutube[index],
+                                item: widget.itemProduct.videos[index],
                                 index: index
                             ),
                           ),

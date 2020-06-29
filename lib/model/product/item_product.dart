@@ -19,7 +19,8 @@ class ItemProduct {
   String create_date;
   String category;
   String unit;
-  List<String> images;
+  List<String> images = List();
+  List<String> videos = List();
   int status;
   MerchantProduct merchant;
 
