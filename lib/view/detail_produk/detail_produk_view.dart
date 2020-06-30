@@ -169,7 +169,9 @@ class _DetailProdukViewState extends State<DetailProdukView> {
                               SizedBox(height: 16.h,),
                               Text(widget.itemProduct.description,
                                   maxLines: 10, style: ThemeTextStyle.ralewayRegular.apply(fontSizeDelta: 12.ssp, color: Colors.black)),
-                              SizedBox(height: 35.h,),
+                              SizedBox(height: (widget.itemProduct.videos?.length ?? 0) == 0 ? 15.h : 35.h,),
+                              (widget.itemProduct.videos?.length ?? 0) == 0 ?
+                              Container() :
                               Text('Video Produk', style: ThemeTextStyle.ralewayBold.apply(color: ThemeColor.primary, fontSizeDelta: 18.ssp),),
                             ],
                           ),
@@ -188,9 +190,11 @@ class _DetailProdukViewState extends State<DetailProdukView> {
 //                            ),
 //                          ),
 //                        ),
-                        SizedBox(height: 16.h,),
+                        SizedBox(height: (widget.itemProduct.videos?.length ?? 0) == 0 ? 0 : 16.h,),
+                        (widget.itemProduct.videos?.length ?? 0) == 0 ?
+                        Container() :
                         Container(
-                          width: size.width, height: _detailProdukStores.fullScreen ? size.height : 120.h,
+                          width: size.width, height: 120.h,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: widget.itemProduct.videos.length,
