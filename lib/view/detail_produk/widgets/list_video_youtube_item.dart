@@ -8,6 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+class YoutubeFullScreenCallback {
+  YoutubeFullScreenCallback(this.isPlaying, this.position);
+
+  int position;
+  bool isPlaying;
+}
+
 class ListVideoYoutubeItem extends StatefulWidget {
 
   ListVideoYoutubeItem({Key key, @required this.isFirst, @required this.item, @required this.index}): super(key: key);
@@ -46,6 +53,9 @@ class _ListVideoYoutubeItemState extends State<ListVideoYoutubeItem> with Single
 
   @override
   void dispose() {
+    if (_youtubePlayerController.value.isFullScreen) {
+      _youtubePlayerController.toggleFullScreenMode();
+    }
     _youtubePlayerController.dispose();
 
     super.dispose();
@@ -89,9 +99,8 @@ class _ListVideoYoutubeItemState extends State<ListVideoYoutubeItem> with Single
                 GestureDetector(
                   onTap: () async {
                     _youtubePlayerController.pause();
-                    YoutubePlayerValue result = await Navigator.push(context, MaterialPageRoute(builder: (_) => YoutubeFullScreen(url: widget.item, time: _youtubePlayerController.value.position.inSeconds)));
-                    print('result from detail $result');
-                    _youtubePlayerController.seekTo(Duration(seconds: result.position.inSeconds));
+                    YoutubeFullScreenCallback result = await Navigator.push(context, MaterialPageRoute(builder: (_) => YoutubeFullScreen(url: widget.item, time: _youtubePlayerController.value.position.inSeconds)));
+                    _youtubePlayerController.seekTo(Duration(seconds: result.position));
                     if (result.isPlaying) {
                       _youtubePlayerController.play();
                     } else {

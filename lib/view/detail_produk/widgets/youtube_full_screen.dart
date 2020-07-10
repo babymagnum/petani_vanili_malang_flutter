@@ -2,6 +2,7 @@ import 'package:dribbble_clone/core/helper/locator.dart';
 import 'package:dribbble_clone/core/theme/theme_color.dart';
 import 'package:dribbble_clone/core/theme/theme_text_style.dart';
 import 'package:dribbble_clone/view/detail_produk/stores/detail_produk_stores.dart';
+import 'package:dribbble_clone/view/detail_produk/widgets/list_video_youtube_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,7 +52,10 @@ class _YoutubeFullScreenState extends State<YoutubeFullScreen> {
 
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pop(context, youtubePlayerController.value);
+        if (youtubePlayerController.value.isFullScreen) {
+          youtubePlayerController.toggleFullScreenMode();
+        }
+        Navigator.pop(context, YoutubeFullScreenCallback(youtubePlayerController.value.isPlaying, youtubePlayerController.value.position.inSeconds));
         return true;
       },
       child: Observer(
@@ -63,7 +67,12 @@ class _YoutubeFullScreenState extends State<YoutubeFullScreen> {
             title: Row(
               children: <Widget>[
                 GestureDetector(
-                  onTap: () => Navigator.pop(context, youtubePlayerController.value.position.inSeconds),
+                  onTap: () {
+                    if (youtubePlayerController.value.isFullScreen) {
+                      youtubePlayerController.toggleFullScreenMode();
+                    }
+                    Navigator.pop(context, YoutubeFullScreenCallback(youtubePlayerController.value.isPlaying, youtubePlayerController.value.position.inSeconds));
+                  },
                   child: Icon(Icons.arrow_back, size: 24.w, color: Colors.white,),
                 ),
                 SizedBox(width: 10.w,),

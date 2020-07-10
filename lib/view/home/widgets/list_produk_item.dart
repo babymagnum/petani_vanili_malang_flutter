@@ -30,7 +30,7 @@ class ListProdukItem extends StatelessWidget {
         children: <Widget>[
           SizedBox(height: 20.h,),
           PlaceholderNetworkImage(
-            url: item.images[0],
+            url: (item?.images?.length ?? 0) > 0 ? item.images[0] : '',
             size: Size(size.width, 50.h),
             borderRadius: 0,
             imageFit: BoxFit.contain,
