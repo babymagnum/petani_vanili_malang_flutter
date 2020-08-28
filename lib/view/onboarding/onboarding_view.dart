@@ -4,6 +4,7 @@ import 'package:dribbble_clone/core/helper/locator.dart';
 import 'package:dribbble_clone/core/theme/fonts.dart';
 import 'package:dribbble_clone/core/theme/theme_color.dart';
 import 'package:dribbble_clone/core/theme/theme_text_style.dart';
+import 'package:dribbble_clone/core/widgets/button_reload.dart';
 import 'package:dribbble_clone/core/widgets/placeholder_container_shimmer.dart';
 import 'package:dribbble_clone/core/widgets/placeholder_network_image.dart';
 import 'package:dribbble_clone/view/home/home_view.dart';
@@ -49,6 +50,20 @@ class _OnboardingViewState extends State<OnboardingView> {
       builder: (_) => Scaffold(
         body: _berandaStores.loadingMerchant ?
         PlaceholderContainerShimmer(size: Size(size.width, size.height), borderRadius: 0) :
+        _berandaStores.errorMerchant ?
+        Container(
+          width: size.width, height: size.height,
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ButtonReload(onTap: () {
+                  if (_berandaStores.merchantDetailData == null) _berandaStores.getMerchantDetailData();
+                })
+              ],
+            ),
+          ),
+        ) :
         Stack(
           children: <Widget>[
             Container(height: size.height, width: size.width,),
